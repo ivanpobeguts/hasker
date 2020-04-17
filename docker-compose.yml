@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:10.1-alpine
+    volumes:
+      - './postgres_data:/var/lib/postgresql/data/'
+
+  hasker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/hasker'
+    container_name: hasker
+    working_dir: /hasker
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
