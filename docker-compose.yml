@@ -4,7 +4,9 @@ services:
   postgres:
     image: postgres:10.1-alpine
     volumes:
-      - './postgres_data:/var/lib/postgresql/data/'
+      - './pdata:/var/lib/postgresql/data/'
+    ports:
+      - "5432:5432"
 
   hasker:
     build:
@@ -15,6 +17,7 @@ services:
     container_name: hasker
     working_dir: /hasker
     command: python3 manage.py runserver 0.0.0.0:8000
+    tty: true
     ports:
       - "8000:8000"
     depends_on:
