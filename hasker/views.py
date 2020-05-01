@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
-from .forms import SignUpForm, SignInForm
+from .forms import SignUpForm
 from .models import Person
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
 class SignUpView(CreateView):
@@ -22,11 +25,3 @@ class SignUpView(CreateView):
         login(self.request, new_user)
         messages.success(self.request, 'Registration successful')
         return valid
-
-
-class SignInView(LoginView):
-    template_name = 'person/sign_in.html'
-
-
-class SignOutView(LogoutView):
-    pass

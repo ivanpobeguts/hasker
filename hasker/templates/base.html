@@ -15,7 +15,7 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <a class="navbar-brand" href="#"><h2 style="color: aliceblue">HASKER</h2></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><h2 style="color: aliceblue">HASKER</h2></a>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button style="color: aliceblue" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -31,7 +31,7 @@
                             {{ user.username }}
                         </a>
                     </h5>
-                    <a class="text-white" href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                    <a class="text-white" href="{% url 'sign_out' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
                 </div>
             </div>
         {% else %}

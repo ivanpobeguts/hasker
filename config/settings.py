@@ -121,3 +121,5 @@ AVATAR_SIZE = (50, 50)
 
 #Auth
 AUTH_USER_MODEL = "hasker.Person"
+LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
