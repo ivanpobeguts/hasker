@@ -1,7 +1,9 @@
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, FormView
+from django.shortcuts import render, redirect
 
 from .forms import SignUpForm, SettingsForm
 from .models import Person
@@ -24,11 +26,27 @@ class SignUpView(CreateView):
         return valid
 
 
-class SettingsView(FormView, SuccessMessageMixin):
+class SettingsView(LoginRequiredMixin, FormView, SuccessMessageMixin):
     model = Person
     form_class = SettingsForm
     template_name = 'person/settings.html'
     success_url = '/settings/'
+    login_url = '/login/'
+
+    # def get_form_kwargs(self):
+    #     form_kwargs = super().get_form_kwargs()
+    #     form_kwargs.update({'instance': self.request.user})
+    #     return form_kwargs
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES, instance=request.user)
+
+        if form.is_valid():
+            user_obj = form.save(commit=False)
+            user_obj.save()
+            return redirect('settings')
+        else:
+            return self.form_invalid(form)
 
     def get_initial(self):
         args = super().get_initial()
