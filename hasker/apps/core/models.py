@@ -8,7 +8,7 @@ class Question(models.Model):
     body = models.CharField(max_length=150)
     created_at = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="questions")
-    tags = models.ManyToManyField("Tag", blank=True, related_name="questions")
+    tags = models.ManyToManyField("Tag", blank=True, related_name="questions", max_length=10)
 
 
 class Tag(models.Model):

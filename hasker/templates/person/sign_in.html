@@ -6,7 +6,7 @@
 
             <h1>Sign In</h1>
 
-            <form enctype="multipart/form-data" method="POST">
+            <form class="mt-5" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit" name="" value="Login">
