@@ -5,9 +5,9 @@ def root(*dirs):
     base_dir = os.path.join(os.path.dirname(__file__), '..', 'hasker')
     return os.path.abspath(os.path.join(base_dir, *dirs))
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hasker'
+    'hasker.apps.person',
+    'hasker.apps.core',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +48,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,7 +110,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-#Static
+# Static
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
@@ -119,7 +120,7 @@ MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 DEFAULT_AVATAR_URL = os.path.join(MEDIA_URL, 'user_images', 'default', 'default_avatar.jpg')
 AVATAR_SIZE = (50, 50)
 
-#Auth
-AUTH_USER_MODEL = "hasker.Person"
+# Auth
+AUTH_USER_MODEL = "person.Person"
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
