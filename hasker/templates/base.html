@@ -18,7 +18,7 @@
         <a class="navbar-brand" href="{% url 'index' %}"><h2 style="color: aliceblue">HASKER</h2></a>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button style="color: aliceblue" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button style="color: aliceblue" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
         {% if user.is_authenticated %}
             <div class="media navbar-nav ml-auto">
@@ -40,7 +40,7 @@
                     <a style="color: aliceblue" class="nav-link active" href="{% url 'sign_in' %}">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a style="color: aliceblue" href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-success nav-link">Sign
+                    <a style="color: aliceblue" href="{% url 'sign_up' %}" class="btn btn-sm btn-outline-primary nav-link">Sign
                         up</a>
                 </li>
             </ul>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="col ml-auto col-md-3 mt-4">
-            <a class="btn btn-success btn-block" href="#">Ask!</a>
+            <a class="btn btn-primary btn-block" href="{% url 'ask' %}">Ask!</a>
             <h3 class="trending">Trending</h3>
             <p>
                 <span class="badge btn-primary">10.0</span>

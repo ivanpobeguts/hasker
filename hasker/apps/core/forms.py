@@ -22,3 +22,4 @@ class AskForm(forms.ModelForm):
         tags = cleaned_data.get('tags')
         if len(tags) > 3:
             self.add_error('tags', "You cannot add more than 3 tags")
+        return cleaned_data

@@ -3,9 +3,60 @@
 {% block content %}
     <div class="container">
         <div class="justify-content-center">
+            <div class="media row border-bottom mt-2">
+                <h2 class="mt-5 mb-4" id="title" data-ordering="{{ ordering }}">
+                    <a href="{% url 'index' %}?order_by=new" id="title-new">New questions</a>
+                    |
+                    <a href="{% url 'index' %}?order_by=hot" id="title-hot">Hot questions</a>
+                </h2>
+            </div>
 
-            <h2>Hello!</h2>
+            {% for question in question_list %}
+                <div class="media row border-bottom mt-2">
+                    <div class="col-sm-1 text-center">
+                        <strong>{{ 10 }}</strong> Votes
+                    </div>
+                    <div class="col-sm-1 text-center">
+                        <strong>{{ 5 }}</strong> Answers
+                    </div>
+                    <div class="media-body col-sm-10 ml-3">
+                        <h5>
+                            <a href="#">{{ question.title }}</a>
+                        </h5>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                {% for tag in question.tags.all %}
+                                    <a href="#" class="badge badge-secondary">{{ tag.name }}</a>
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-4" style="font-size: 0.9em;">
+                                <i class="fas fa-user"></i>
+                                <span>{{ question.author.username }}</span>
+                                <p>asked: {{ question.created_at }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            {% empty %}
+                <li>No questions yet</li>
+            {% endfor %}
+            {% if is_paginated %}
+                <div class="pagination mb-5 mt-5">
+                    <div class="page-links row">
+                        {% if page_obj.has_previous %}
+                            <a class="page-link col-m-5 text-center" href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <div class="page-current col-m-5 ml-3 mr-3">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </div>
+                        {% if page_obj.has_next %}
+                            <a class="page-link col-m-5 text-center"
+                               href="/?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
