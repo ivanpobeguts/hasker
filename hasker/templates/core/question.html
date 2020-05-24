@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-sm-10 mt-3">
                     {% for tag in question.tags.all %}
-                        <a href="#" class="badge badge-secondary">{{ tag.name }}</a>
+                        <a href="/tags?q={{ tag.name }}" class="badge badge-secondary">{{ tag.name }}</a>
                     {% endfor %}
                 </div>
                 <div class="col-sm-2">

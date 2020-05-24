@@ -18,7 +18,15 @@ class Question(models.Model):
 
     @classmethod
     def trending(cls, n=5):
-        return Question.objects.all().order_by('-rating', '-created_at')[:n]
+        return cls.objects.all().order_by('-rating', '-created_at')[:n]
+
+    @classmethod
+    def find_by_title(cls, param):
+        return cls.objects.filter(title__icontains=str(param))
+
+    @classmethod
+    def find_by_tag(cls, param):
+        return cls.objects.filter(tags__name=str(param))
 
 
 class Tag(models.Model):

@@ -1,7 +1,9 @@
-from django.views.generic import CreateView, ListView, DetailView, FormView
+import re
+
+from django.views.generic import CreateView, ListView, DetailView, FormView, RedirectView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -29,6 +31,37 @@ class IndexView(ListView):
         context = super().get_context_data(**kwargs)
         context['order_by'] = self.request.GET.get('order_by', '')
         return context
+
+
+class SearchView(ListView):
+    template_name = 'core/search.html'
+    model = Question
+    paginate_by = 5
+
+    def get_queryset(self, *args, **kwargs):
+        return Question.find_by_title(self.request.GET.get('q'))
+
+
+class TagView(ListView):
+    template_name = 'core/search.html'
+    model = Question
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Question.find_by_tag(self.request.GET.get('q'))
+
+
+class SearchRedirectView(RedirectView):
+    permanent = False
+    query_string = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        input_string = self.request.GET.get('q')
+        parsed_input = re.match(r'tag:(\w+)', input_string)
+        if parsed_input:
+            tag_name = parsed_input.group(1)
+            return f"{reverse('tags')}?q={tag_name}"
+        return f"{reverse('search')}?q={input_string}"
 
 
 class AskView(LoginRequiredMixin, CreateView):

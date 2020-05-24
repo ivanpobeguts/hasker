@@ -3,24 +3,14 @@
 {% block content %}
     <div class="container">
         <div class="justify-content-center">
-            <ul class="nav nav-tabs mb-3 mt-3">
-                <li class="nav-item">
-                    <h2>
-                        <a class="nav-link {% if order_by in 'new' or order_by == '' %}active{% endif %}"
-                           href="{% url 'index' %}?order_by=new">
-                            New questions
-                        </a>
-                    </h2>
-                </li>
-                <li class="nav-item">
-                    <h2>
-                        <a class="nav-link {% if order_by == 'hot' %}active{% endif %}"
-                           href="{% url 'index' %}?order_by=hot">
-                            Hot questions
-                        </a>
-                    </h2>
-                </li>
-            </ul>
+            <div class="media row border-bottom mt-2">
+                <h2>Search results</h2>
+            </div>
+
+            {% if not question_list %}
+                <span>No results found</span>
+            {% endif %}
+
 
             {% for question in question_list %}
                 <div class="media row border-bottom mt-2">
@@ -49,8 +39,6 @@
                     </div>
                 </div>
 
-            {% empty %}
-                <li>No questions yet</li>
             {% endfor %}
             {% if is_paginated %}
                 <div class="pagination mb-5 mt-5">
