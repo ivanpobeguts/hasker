@@ -1,0 +1,6 @@
+{% for question in top_questions %}
+    <p>
+        <span class="badge btn-primary">{{ question.rating }}</span>
+        <a href="{% url 'question' question.slug %}">{{ question.title }}</a>
+    </p>
+{% endfor %}

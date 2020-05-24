@@ -16,6 +16,10 @@ class Question(models.Model):
         self.rating += value
         self.save()
 
+    @classmethod
+    def trending(cls, n=5):
+        return Question.objects.all().order_by('-rating', '-created_at')[:n]
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
