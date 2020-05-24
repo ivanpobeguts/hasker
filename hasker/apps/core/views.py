@@ -19,8 +19,16 @@ class IndexView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset()
-        qs = qs.order_by("-created_at")
+        if self.request.GET.get('order_by') == 'hot':
+            qs = qs.order_by('-rating', '-created_at')
+        else:
+            qs = qs.order_by('-created_at')
         return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_by'] = self.request.GET.get('order_by', '')
+        return context
 
 
 class AskView(LoginRequiredMixin, CreateView):
