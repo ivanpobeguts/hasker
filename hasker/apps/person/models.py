@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.templatetags.static import static
 from django.conf import settings
 
 
@@ -12,4 +11,4 @@ class Person(AbstractUser):
         if self.avatar:
             return self.avatar.url
         else:
-            return static(settings.DEFAULT_AVATAR_URL)
+            return settings.DEFAULT_AVATAR_URL

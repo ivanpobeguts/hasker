@@ -115,8 +115,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
 # Media
-MEDIA_URL = os.path.join(STATIC_URL, '/media/')
-MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
 DEFAULT_AVATAR_URL = os.path.join(MEDIA_URL, 'user_images', 'default', 'default_avatar.jpg')
 AVATAR_SIZE = (50, 50)
 
@@ -124,3 +124,12 @@ AVATAR_SIZE = (50, 50)
 AUTH_USER_MODEL = "person.Person"
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+# Mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hasker@gmail.com'
+EMAIL_HOST_PASSWORD = 'pass'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

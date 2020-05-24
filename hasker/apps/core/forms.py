@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Question
+from .models import Question, Answer
 
 
 class TagsField(forms.CharField):
@@ -23,3 +23,11 @@ class AskForm(forms.ModelForm):
         if len(tags) > 3:
             self.add_error('tags', "You cannot add more than 3 tags")
         return cleaned_data
+
+
+class AnswerForm(forms.ModelForm):
+    body = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}), label='')
+
+    class Meta:
+        model = Answer
+        fields = ('body',)

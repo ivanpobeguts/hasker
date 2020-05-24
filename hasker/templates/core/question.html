@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    {#-------------------Question-------------------#}
+    <h1 class="mt-5">
+        {{ question.title }}
+    </h1>
+
+    <div class="row mb-5">
+        <div class="col-sm-1 rating text-center">
+            <form action="{% url 'vote' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="value" value="1">
+                <input type="hidden" name="entity_id" value={{ question.id }}>
+                <input type="hidden" name="entity_type" value="question">
+                <button class="btn btn-secondary">
+                    &#9650;
+                </button>
+            </form>
+            <strong class="rating-counter-js">{{ question.rating }}</strong>
+            <form action="{% url 'vote' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="value" value="-1">
+                <input type="hidden" name="entity_id" value={{ question.id }}>
+                <input type="hidden" name="entity_type" value="question">
+                <button class="btn btn-secondary">
+                    &#9660;
+                </button>
+            </form>
+        </div>
+        <div class="col-sm-11">
+            {{ question.body }}
+            <div class="row">
+                <div class="col-sm-10 mt-3">
+                    {% for tag in question.tags.all %}
+                        <a href="#" class="badge badge-secondary">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-2">
+                    <img class="align-self-start mr-3" src="{{ question.author.avatar_url }}" alt="" width="40"
+                         height="40">
+                    <span>{{ question.author.username }}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {#-------------------Answers-------------------#}
+    {% for answer in answers %}
+        <div class="row mb-5">
+            <div class="col-sm-1 rating text-center">
+                <form action="{% url 'vote' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="value" value="1">
+                    <input type="hidden" name="entity_id" value={{ answer.id }}>
+                    <input type="hidden" name="entity_type" value="answer">
+                    <button class="btn btn-secondary">
+                        &#9650;
+                    </button>
+                </form>
+                <strong class="rating-counter-js">{{ answer.rating }}</strong>
+                <form action="{% url 'vote' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="value" value="-1">
+                    <input type="hidden" name="entity_id" value={{ answer.id }}>
+                    <input type="hidden" name="entity_type" value="answer">
+                    <button class="btn btn-secondary">
+                        &#9660;
+                    </button>
+                </form>
+            </div>
+            <div class="col-sm-11">
+                {{ answer.body }}
+                <div class="row">
+                    <div class="col-sm-2 ml-auto">
+                        <img class="align-self-start mr-3" src="{{ answer.author.avatar_url }}" alt="" width="40"
+                             height="40">
+                        <span>{{ answer.author.username }}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+
+    {#-------------------Answer form-------------------#}
+    <form class="mt-5" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ answer_form.as_p }}
+        <input type="submit" name="" value="Answer">
+    </form>
+{% endblock %}
