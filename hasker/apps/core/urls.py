@@ -7,7 +7,8 @@ from .views import (
     VoteView,
     SearchView,
     TagView,
-    SearchRedirectView
+    SearchRedirectView,
+    CorrectAnswerView
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('tags', TagView.as_view(), name='tags'),
     path('search_redirect', SearchRedirectView.as_view(), name='search_redirect'),
     path('question/<slug:slug>', QuestionDetailView.as_view(), name='question'),
+    path('correct_answer', CorrectAnswerView.as_view(), name='correct_answer'),
 ]

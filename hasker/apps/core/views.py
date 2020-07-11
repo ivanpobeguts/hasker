@@ -7,10 +7,10 @@ from django.shortcuts import redirect, reverse
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
-from .models import Question, Tag, Answer
-from .services import vote
+from .models import Question, Tag, Answer, vote
 from .forms import AskForm, AnswerForm
 
 
@@ -127,7 +127,7 @@ class QuestionDetailView(DetailView, FormMixin):
 
         return redirect('question', slug=self.kwargs['slug'])
 
-    @method_decorator(login_required)
+    @method_decorator(login_required(login_url='/login/'))
     def post(self, request, *args, **kwargs):
         question = self.get_object()
         self.object = question
@@ -148,3 +148,15 @@ class VoteView(LoginRequiredMixin, FormView):
         type = request.POST.get('entity_type')
         vote(entity_id, type, request.user, value)
         return redirect(request.META['HTTP_REFERER'])
+
+
+class CorrectAnswerView(LoginRequiredMixin, FormView):
+    template_name = 'core/question.html'
+    login_url = '/login/'
+
+    def dispatch(self, request, *args, **kwargs):
+        answer_id = request.POST.get('id')
+        answer = get_object_or_404(Answer, id=answer_id)
+        answer.mark_correct(request.user)
+        return redirect(request.META['HTTP_REFERER'])
+
