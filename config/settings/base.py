@@ -2,7 +2,7 @@ import os
 
 
 def root(*dirs):
-    base_dir = os.path.join(os.path.dirname(__file__), '..', 'hasker')
+    base_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'hasker')
     return os.path.abspath(os.path.join(base_dir, *dirs))
 
 

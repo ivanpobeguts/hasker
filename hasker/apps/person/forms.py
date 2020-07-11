@@ -43,7 +43,7 @@ class SignUpForm(forms.ModelForm, AvatarMixin):
         if cleaned_data.get('password') != cleaned_data.get('rep_password'):
             self.add_error('rep_password', "Passwords don't match")
 
-    class Meta():
+    class Meta:
         model = Person
         fields = ('username', 'password', 'rep_password', 'email', 'avatar')
 

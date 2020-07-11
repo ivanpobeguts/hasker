@@ -6,5 +6,5 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.p
 
 COPY . /hasker
 WORKDIR /hasker
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements/prod.txt
 EXPOSE 8000
