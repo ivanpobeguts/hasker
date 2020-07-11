@@ -1,12 +1,11 @@
 from unittest.mock import Mock
 
-from django.core.files.images import ImageFile
 import pytest
 
 from ..models import Person
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_create_person_with_avatar():
     avatar = Mock(url='path/to/url')
     new_person = Person(username='John', email='john.don@gmail.com', avatar=avatar)
@@ -15,7 +14,7 @@ def test_create_person_with_avatar():
     assert new_person.avatar_url == 'path/to/url'
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_create_person_without_avatar():
     new_person = Person(username='John', email='john.don@gmail.com')
     new_person.save()

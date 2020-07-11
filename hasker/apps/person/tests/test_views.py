@@ -12,14 +12,13 @@ BASE_PATH = dirname(__file__)
 
 @pytest.mark.django_db
 def test_register_ok(client):
-    url = reverse('sign_up')
     data = urlencode({
         'username': 'John1',
         'password': 'pass',
         'rep_password': 'pass',
         'email': 'john_don@gmail.com'
     })
-    client.post(url, data=data, content_type='application/x-www-form-urlencoded')
+    client.post(reverse('sign_up'), data=data, content_type='application/x-www-form-urlencoded')
     person_query = Person.objects
     assert person_query.count() == 1
     assert person_query.get().username == 'John1'
@@ -27,21 +26,19 @@ def test_register_ok(client):
 
 @pytest.mark.django_db
 def test_register_diff_passwords(client):
-    url = reverse('sign_up')
     data = urlencode({
         'username': 'John1',
         'password': 'pass',
         'rep_password': 'pass1',
         'email': 'john_don@gmail.com'
     })
-    client.post(url, data=data, content_type='application/x-www-form-urlencoded')
+    client.post(reverse('sign_up'), data=data, content_type='application/x-www-form-urlencoded')
     assert Person.objects.count() == 0
 
 
 @pytest.mark.django_db
-def test_settings_ok(client):
-    Person.objects.create_user(username='testuser', password='12345', email='test@gmail.com')
-    assert Person.objects.get().avatar_url == '/media/user_images/default/default_avatar.jpg'
+def test_settings_ok(client, person):
+    assert person.avatar_url == '/media/user_images/default/default_avatar.jpg'
 
     client.login(username='testuser', password='12345')
     with open(join(BASE_PATH, 'files', 'test_avatar.png'), 'rb') as fp:

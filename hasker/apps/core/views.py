@@ -4,7 +4,6 @@ from django.views.generic import CreateView, ListView, DetailView, FormView, Red
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, reverse
-from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
@@ -76,13 +75,7 @@ class AskView(LoginRequiredMixin, CreateView):
 
         if form.is_valid():
             question = form.save(commit=False)
-            question.author = request.user
-            question.slug = slugify(question.title)[:49]
-            question.save()
-            tag_names = form.cleaned_data.get('tags')
-            for tag_name in tag_names:
-                tag, _ = Tag.objects.get_or_create(name=tag_name)
-                question.tags.add(tag)
+            question.update_params(request.user, form.cleaned_data.get('tags'))
             return redirect('index')
         else:
             return self.form_invalid(form)
@@ -97,12 +90,7 @@ class QuestionDetailView(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         question = self.get_object()
-        answers = (
-            Answer.objects.filter(question=question)
-                .order_by('-rating', '-created_at')
-        )
-        correct_answer = any(answer.is_correct for answer in answers)
-
+        answers, correct_answer = Answer.get_correct(question)
         context.update(dict(answers=answers,
                             answer_form=self.form_class(),
                             correct_answer=correct_answer))
@@ -111,9 +99,7 @@ class QuestionDetailView(DetailView, FormMixin):
     def form_valid(self, form):
         answer = form.save(commit=False)
         question = self.get_object()
-        answer.question = question
-        answer.author = self.request.user
-        answer.save()
+        answer.update_params(question, self.request.user)
 
         # doesn't work!
         # link = self.request.build_absolute_uri()
@@ -159,4 +145,3 @@ class CorrectAnswerView(LoginRequiredMixin, FormView):
         answer = get_object_or_404(Answer, id=answer_id)
         answer.mark_correct(request.user)
         return redirect(request.META['HTTP_REFERER'])
-

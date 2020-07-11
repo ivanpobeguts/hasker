@@ -119,7 +119,7 @@ STATIC_URL = '/static/'
 
 # Media
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 DEFAULT_AVATAR_URL = os.path.join(MEDIA_URL, 'user_images', 'default', 'default_avatar.jpg')
 AVATAR_SIZE = (50, 50)
 
