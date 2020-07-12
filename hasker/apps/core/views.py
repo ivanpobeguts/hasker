@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
-from .models import Question, Tag, Answer, vote
+from .models import Question, Answer, vote
 from .forms import AskForm, AnswerForm
 
 
@@ -100,18 +100,20 @@ class QuestionDetailView(DetailView, FormMixin):
         answer = form.save(commit=False)
         question = self.get_object()
         answer.update_params(question, self.request.user)
-
-        # doesn't work!
-        # link = self.request.build_absolute_uri()
-        # send_mail(
-        #     'HASKER: You have a new answer!',
-        #     f'Check out the new answer to your question: \n {link}',
-        #     'from@example.com',
-        #     [question.author.email],
-        #     fail_silently=False,
-        # )
+        self.send_email(question.author.email)
 
         return redirect('question', slug=self.kwargs['slug'])
+
+    def send_email(self, email_to_send):
+        link = self.request.build_absolute_uri()
+        send_mail(
+            'HASKER: You have a new answer!',
+            f'Check out the new answer to your question: \n {link}',
+            'from@example.com',
+            [email_to_send],
+            fail_silently=False,
+            html_message=f'<p>Check out the new answer to your question: \n {link}<p>',
+        )
 
     @method_decorator(login_required(login_url='/login/'))
     def post(self, request, *args, **kwargs):

@@ -22,3 +22,16 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+
+  hasker-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/hasker'
+    container_name: hasker
+    working_dir: /hasker
+    command: pytest
+    tty: true
+    depends_on:
+      - postgres

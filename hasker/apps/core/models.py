@@ -18,7 +18,7 @@ class Question(models.Model):
 
     def update_params(self, author, tag_names):
         self.author = author
-        self.slug = slugify(self.title)[:10]
+        self.slug = slugify(self.title)[:40]
         self.save()
         for tag_name in tag_names:
             tag, _ = Tag.objects.get_or_create(name=tag_name)

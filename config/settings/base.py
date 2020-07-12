@@ -129,7 +129,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 # Mail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'hasker@gmail.com'
