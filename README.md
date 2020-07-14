@@ -7,7 +7,6 @@ Simple clone of [Stackoverflow](https://stackoverflow.com). User can:
 - mark answer as correct
 - change profile image
 
-![Main screen](screenshots/main_screen.png?raw=true)
 ## Environment
 Application requires docker and make to be installed.
 
@@ -19,6 +18,11 @@ $ make prod
 ```
 
 The main page should be accessible on http://0.0.0.0:8000/ .
+![Main screen](screenshots/main_screen.png?raw=true)
+
+## API
+Hasker API documentation should be available on http://0.0.0.0:8000/api/v1/docs .
+![API screen](screenshots/api_screen.png?raw=true)
 
 ## Tests
 

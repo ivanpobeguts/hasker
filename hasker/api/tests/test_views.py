@@ -1,9 +1,4 @@
-from rest_framework.test import APIClient
-
 import pytest
-from django.urls import reverse
-
-from hasker.apps.core.models import Question, Answer
 
 
 @pytest.mark.django_db
