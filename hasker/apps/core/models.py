@@ -52,7 +52,7 @@ class Tag(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=True, related_name='answers')
     body = models.CharField(max_length=1000)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='answers')
     created_at = models.DateTimeField(default=timezone.now)
     rating = models.IntegerField(default=0)
     is_correct = models.BooleanField(default=False)

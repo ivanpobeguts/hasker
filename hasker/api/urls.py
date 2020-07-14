@@ -19,5 +19,5 @@ urlpatterns = [
     path('search:text', TextSearchAPIView.as_view(), name='text_search'),
     path('search:tag', TagSearchAPIView.as_view(), name='tag_search'),
     path('question/<slug:slug>', QuestionDetailAPIView.as_view(), name='question'),
-    path('question/<slug:slug>/answers', AnswersAPIView.as_view(), name='answer'),
+    path('question/<slug:slug>/answers', AnswersAPIView.as_view(), name='answers'),
 ]
