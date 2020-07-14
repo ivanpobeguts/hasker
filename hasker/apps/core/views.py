@@ -3,6 +3,7 @@ import re
 from django.views.generic import CreateView, ListView, DetailView, FormView, RedirectView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from django.shortcuts import redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -16,7 +17,7 @@ from .forms import AskForm, AnswerForm
 class IndexView(ListView):
     template_name = 'index.html'
     model = Question
-    paginate_by = 5
+    paginate_by = settings.PAGE_SIZE
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset()
@@ -35,7 +36,7 @@ class IndexView(ListView):
 class SearchView(ListView):
     template_name = 'core/search.html'
     model = Question
-    paginate_by = 5
+    paginate_by = settings.PAGE_SIZE
 
     def get_queryset(self, *args, **kwargs):
         return Question.find_by_title(self.request.GET.get('q'))
@@ -44,7 +45,7 @@ class SearchView(ListView):
 class TagView(ListView):
     template_name = 'core/search.html'
     model = Question
-    paginate_by = 5
+    paginate_by = settings.PAGE_SIZE
 
     def get_queryset(self):
         return Question.find_by_tag(self.request.GET.get('q'))

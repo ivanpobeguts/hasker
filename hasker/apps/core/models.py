@@ -40,15 +40,19 @@ class Question(models.Model):
     def find_by_tag(cls, param):
         return cls.objects.filter(tags__name=str(param))
 
+    @classmethod
+    def get_by_slug(cls, param):
+        return cls.objects.filter(slug=str(param)).get()
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=True, related_name='answers')
     body = models.CharField(max_length=1000)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='answers')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     rating = models.IntegerField(default=0)
     is_correct = models.BooleanField(default=False)
