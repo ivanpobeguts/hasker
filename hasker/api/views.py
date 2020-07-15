@@ -1,8 +1,20 @@
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 from rest_framework.generics import RetrieveAPIView, ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from hasker.apps.core.models import Question
+from hasker.apps.questions.models import Question
 from .serializers import QuestionSerializer, TrendingSerializer, AnswerSerializer
+
+SCHEMA_VIEW = get_schema_view(
+    openapi.Info(
+        title="Hasker API",
+        default_version='v1',
+        description="API documentation for Hasker application",
+    ),
+    public=True,
+    permission_classes=(AllowAny,),
+)
 
 
 class IndexAPIView(ListAPIView):
@@ -11,11 +23,9 @@ class IndexAPIView(ListAPIView):
 
     def get_queryset(self):
         qs = Question.objects.all()
-        if self.request.query_params.get('order_by') == 'hot':
-            qs = qs.order_by('-rating', '-created_at')
-        else:
-            qs = qs.order_by('-created_at')
-        return qs
+        order_by_value = ['-rating', '-created_at'] if self.request.query_params.get('order_by') == 'hot' else [
+            '-created_at']
+        return qs.order_by(*order_by_value)
 
 
 class TrendingAPIView(ListAPIView):

@@ -38,7 +38,7 @@ def test_register_diff_passwords(client):
 
 @pytest.mark.django_db
 def test_settings_ok(client, person):
-    assert person.avatar_url == '/media/user_images/default/default_avatar.jpg'
+    assert person.avatar_url == '/static/img/user_images/default/default_avatar.jpg'
 
     client.login(username='testuser', password='12345')
     with open(join(BASE_PATH, 'files', 'test_avatar.png'), 'rb') as fp:

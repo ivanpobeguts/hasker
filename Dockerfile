@@ -7,4 +7,5 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.p
 COPY . /hasker
 WORKDIR /hasker
 RUN pip3 install -r requirements/prod.txt
+ENV SECRET_KEY="$a+@5+=8n(*dl0_-bu!z00^+7%i_n)5)gfmd#=s%vft184hmwa"
 EXPOSE 8000

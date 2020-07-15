@@ -12,7 +12,7 @@ from .models import Person
 class SignUpView(CreateView):
     model = Person
     form_class = SignUpForm
-    template_name = 'person/sign_up.html'
+    template_name = 'sign_up.html'
     success_url = '/register/'
 
     def form_valid(self, form):
@@ -29,7 +29,7 @@ class SignUpView(CreateView):
 class SettingsView(LoginRequiredMixin, FormView, SuccessMessageMixin):
     model = Person
     form_class = SettingsForm
-    template_name = 'person/settings.html'
+    template_name = 'settings.html'
     success_url = '/settings/'
     login_url = '/login/'
 

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+<!--{% load static %}-->
+
+{% block title %}Sign In{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="justify-content-center">
+
+            <h1>Sign In</h1>
+
+            <form class="mt-5" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="" value="Login">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

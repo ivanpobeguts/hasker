@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from pytest import fixture
 from rest_framework.test import APIClient
 
-from hasker.apps.core.models import Answer, Question, Tag
+from hasker.apps.questions.models import Answer, Question, Tag
 
 
 @fixture

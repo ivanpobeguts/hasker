@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+<!--{% load static %}-->
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="justify-content-center">
+
+            <h1>Sign Up</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}"
+                         role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Some errors found</strong>
+                </div>
+            {% endif %}
+            <form class="mt-5" enctype="multipart/form-data" method="POST">
+                {% include "person_info_form.html" %}
+                <input type="submit" name="" value="Register">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

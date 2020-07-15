@@ -1,0 +1,18 @@
+{% csrf_token %}
+                {% for field  in form %}
+                    <div class="form-group row ml-auto">
+                        {{ field.label_tag }}
+                        <div class="col-sm-9">
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="errorlist">
+                                    <ul>
+                                        {% for error in field.errors %}
+                                            <li class="erroritem"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}

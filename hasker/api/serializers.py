@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from hasker.apps.core.models import Answer, Question
+from hasker.apps.questions.models import Answer, Question
 
 
 class QuestionSerializer(serializers.ModelSerializer):

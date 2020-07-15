@@ -1,10 +1,7 @@
-from io import BytesIO
-from PIL import Image
-
 from django import forms
-from django.conf import settings
 from django.utils.safestring import mark_safe
 
+from .mixins import AvatarMixin
 from .models import Person
 
 
@@ -12,26 +9,7 @@ class AvatarWidget(forms.widgets.ClearableFileInput):
 
     def render(self, name, value, attrs=None, **kwargs):
         input_html = super().render(name, value, attrs=None, **kwargs)
-        img_html = ''
-        if value:
-            img_html = mark_safe(f'<img src="{value.url}"/><br>')
-        return f'{img_html}{input_html}'
-
-
-class AvatarMixin:
-    def clean_avatar(self):
-        avatar = self.cleaned_data.get('avatar')
-        if avatar:
-            image = Image.open(avatar.file)
-            output_stream = BytesIO()
-
-            resized_img = image.resize(settings.AVATAR_SIZE)
-            resized_img.save(output_stream, format=image.format, quality=100)
-
-            avatar.file = output_stream
-            avatar.image = resized_img
-
-        return avatar
+        return ''.join([mark_safe(f'<img src="{value.url}"/><br>'), input_html]) if value else input_html
 
 
 class SignUpForm(forms.ModelForm, AvatarMixin):

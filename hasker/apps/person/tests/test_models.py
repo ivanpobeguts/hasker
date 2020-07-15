@@ -21,4 +21,4 @@ def test_create_person_without_avatar():
     assert Person.objects.count() == 1
     assert new_person.username == 'John'
     assert new_person.email == 'john.don@gmail.com'
-    assert new_person.avatar_url == '/media/user_images/default/default_avatar.jpg'
+    assert new_person.avatar_url == '/static/img/user_images/default/default_avatar.jpg'
